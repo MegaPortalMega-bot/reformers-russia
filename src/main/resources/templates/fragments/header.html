@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="site-header">
+    <header class="site-header">
+        <div class="container header-inner">
+            <a th:href="@{/}" class="logo">
+                <span class="logo-title">Реформаторы России</span>
+                <span class="logo-subtitle">исторический каталог</span>
+            </a>
+            <nav class="main-nav">
+                <a th:href="@{/}">Главная</a>
+                <div class="nav-dropdown">
+                    <a class="nav-dropdown-toggle" th:href="@{/tierlist(category='economy')}">Тир-листы</a>
+                    <div class="nav-dropdown-menu">
+                        <a th:href="@{/tierlist(category='economy')}">Экономика</a>
+                        <a th:href="@{/tierlist(category='military')}">Военные реформы</a>
+                        <a th:href="@{/tierlist(category='social')}">Социальные реформы</a>
+                        <a th:href="@{/tierlist(category='education')}">Образование</a>
+                        <a th:href="@{/tierlist(category='governance')}">Гос. управление</a>
+                        <a th:href="@{/tierlist(category='overall')}">Общий рейтинг</a>
+                    </div>
+                </div>
+                <a th:href="@{/compare}">Сравнение</a>
+                <a th:href="@{/help}">Справка</a>
+            </nav>
+        </div>
+    </header>
+</th:block>
+</body>
+</html>
+

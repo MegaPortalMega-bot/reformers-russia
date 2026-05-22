@@ -1,0 +1,17 @@
+/home/sanyamopzzz/history/src/main/java/ru/reformers/controller/HelpController.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/config/ReformerRatingsCatalog.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/config/ReformerPortraitCatalog.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/model/Reformer.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/ReformersApplication.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/controller/ReformerApiController.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/config/HelpWebConfig.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/service/HelpDocumentService.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/controller/ReformerController.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/repository/ReformerRepository.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/service/ReformerService.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/config/HelpDocumentsProperties.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/config/DataLoader.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/service/WikiEnrichmentService.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/util/RatingCalculator.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/config/ReformerContentCatalog.java
+/home/sanyamopzzz/history/src/main/java/ru/reformers/config/ReformerEraCatalog.java

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Тир-лист — ' + ${categoryLabel} + ' — Реформаторы России'">Тир-лист</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: site-header}"></div>
+
+<main class="page-main">
+    <div class="container">
+        <section class="tierlist">
+            <header class="tierlist-header">
+                <h1 th:text="'Тир-лист: ' + ${categoryLabel}">Тир-лист</h1>
+                <div class="tierlist-tabs">
+                    <a th:href="@{/tierlist(category='economy')}"
+                       th:classappend="${category == 'economy'} ? ' active' : ''">Экономика</a>
+                    <a th:href="@{/tierlist(category='military')}"
+                       th:classappend="${category == 'military'} ? ' active' : ''">Военные реформы</a>
+                    <a th:href="@{/tierlist(category='social')}"
+                       th:classappend="${category == 'social'} ? ' active' : ''">Социальные реформы</a>
+                    <a th:href="@{/tierlist(category='education')}"
+                       th:classappend="${category == 'education'} ? ' active' : ''">Образование</a>
+                    <a th:href="@{/tierlist(category='governance')}"
+                       th:classappend="${category == 'governance'} ? ' active' : ''">Гос. управление</a>
+                    <a th:href="@{/tierlist(category='overall')}"
+                       th:classappend="${category == 'overall'} ? ' active' : ''">Общий рейтинг</a>
+                </div>
+            </header>
+
+            <div class="tierlist-body">
+                <div class="tier-row" th:each="rank : ${ranks}" th:with="tierList=${tiers.get(rank)}">
+                    <div class="tier-label" th:classappend="' tier-label--' + ${rank}" th:text="${rank}">S</div>
+                    <div class="tier-reformers">
+                        <div class="tier-grid" th:if="${tierList != null and !#lists.isEmpty(tierList)}">
+                            <a class="tier-grid-card"
+                               th:each="reformer : ${tierList}"
+                               th:href="@{/reformer/{id}(id=${reformer.id})}">
+                                <div class="tier-grid-card-image">
+                                    <img th:src="${reformer.imageUrl}" th:alt="${reformer.fullName}" loading="lazy">
+                                </div>
+                                <h3 class="tier-grid-card-name" th:text="${reformer.fullName}">Имя</h3>
+                                <th:block th:switch="${category}">
+                                    <span th:case="'economy'" class="badge tier-grid-card-rating"
+                                          th:classappend="' rating-' + ${reformer.economyRating}"
+                                          th:text="${reformer.economyRating}">A</span>
+                                    <span th:case="'military'" class="badge tier-grid-card-rating"
+                                          th:classappend="' rating-' + ${reformer.militaryRating}"
+                                          th:text="${reformer.militaryRating}">A</span>
+                                    <span th:case="'social'" class="badge tier-grid-card-rating"
+                                          th:classappend="' rating-' + ${reformer.socialRating}"
+                                          th:text="${reformer.socialRating}">A</span>
+                                    <span th:case="'education'" class="badge tier-grid-card-rating"
+                                          th:classappend="' rating-' + ${reformer.educationRating}"
+                                          th:text="${reformer.educationRating}">A</span>
+                                    <span th:case="'governance'" class="badge tier-grid-card-rating"
+                                          th:classappend="' rating-' + ${reformer.governanceRating}"
+                                          th:text="${reformer.governanceRating}">A</span>
+                                    <span th:case="*" class="badge tier-grid-card-rating"
+                                          th:classappend="' rating-' + ${reformer.overallRating}"
+                                          th:text="${reformer.overallRating}">A</span>
+                                </th:block>
+                            </a>
+                        </div>
+                        <span class="tier-empty" th:if="${tierList == null or #lists.isEmpty(tierList)}">—</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: site-footer}"></div>
+
+</body>
+</html>

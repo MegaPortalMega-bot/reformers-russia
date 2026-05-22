@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сравнение реформаторов — Реформаторы России</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: site-header}"></div>
+
+<main class="page-main">
+    <div class="container">
+        <section class="compare">
+            <header class="compare-header">
+                <h1>Сравнение реформаторов</h1>
+                <p>Выберите двух реформаторов для сравнения по основным направлениям реформ.</p>
+            </header>
+
+            <form class="compare-form" method="get" th:action="@{/compare}">
+                <div class="compare-select">
+                    <label for="id1">Первый реформатор</label>
+                    <select id="id1" name="id1">
+                        <option value="">— не выбран —</option>
+                        <option th:each="r : ${allReformers}"
+                                th:value="${r.id}"
+                                th:selected="${left != null} ? (r.id == left.id) : false"
+                                th:text="${r.fullName}">
+                        </option>
+                    </select>
+                </div>
+                <div class="compare-select">
+                    <label for="id2">Второй реформатор</label>
+                    <select id="id2" name="id2">
+                        <option value="">— не выбран —</option>
+                        <option th:each="r : ${allReformers}"
+                                th:value="${r.id}"
+                                th:selected="${right != null} ? (r.id == right.id) : false"
+                                th:text="${r.fullName}">
+                        </option>
+                    </select>
+                </div>
+                <button type="submit">Сравнить</button>
+            </form>
+
+            <div class="compare-content" th:if="${hasBoth}">
+                <div class="compare-cards">
+                    <div class="compare-card">
+                        <div class="compare-image">
+                            <img th:src="${left.imageUrl}" th:alt="${left.fullName}">
+                        </div>
+                        <h2 th:text="${left.fullName}">Имя</h2>
+                        <p th:text="${left.era}">Эпоха</p>
+                    </div>
+                    <div class="compare-card">
+                        <div class="compare-image">
+                            <img th:src="${right.imageUrl}" th:alt="${right.fullName}">
+                        </div>
+                        <h2 th:text="${right.fullName}">Имя</h2>
+                        <p th:text="${right.era}">Эпоха</p>
+                    </div>
+                </div>
+
+                <table class="compare-table">
+                    <thead>
+                    <tr>
+                        <th>Категория</th>
+                        <th th:text="${left.fullName}">Левый</th>
+                        <th th:text="${right.fullName}">Правый</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:classappend="${comparison['economy'] < 0 ? 'row-left-better' : (comparison['economy'] > 0 ? 'row-right-better' : '')}">
+                        <td>Экономика</td>
+                        <td th:text="${left.economyRating}">A</td>
+                        <td th:text="${right.economyRating}">B</td>
+                    </tr>
+                    <tr th:classappend="${comparison['military'] < 0 ? 'row-left-better' : (comparison['military'] > 0 ? 'row-right-better' : '')}">
+                        <td>Военные реформы</td>
+                        <td th:text="${left.militaryRating}">A</td>
+                        <td th:text="${right.militaryRating}">B</td>
+                    </tr>
+                    <tr th:classappend="${comparison['social'] < 0 ? 'row-left-better' : (comparison['social'] > 0 ? 'row-right-better' : '')}">
+                        <td>Социальные реформы</td>
+                        <td th:text="${left.socialRating}">A</td>
+                        <td th:text="${right.socialRating}">B</td>
+                    </tr>
+                    <tr th:classappend="${comparison['education'] < 0 ? 'row-left-better' : (comparison['education'] > 0 ? 'row-right-better' : '')}">
+                        <td>Образование</td>
+                        <td th:text="${left.educationRating}">A</td>
+                        <td th:text="${right.educationRating}">B</td>
+                    </tr>
+                    <tr th:classappend="${comparison['governance'] < 0 ? 'row-left-better' : (comparison['governance'] > 0 ? 'row-right-better' : '')}">
+                        <td>Гос. управление</td>
+                        <td th:text="${left.governanceRating}">A</td>
+                        <td th:text="${right.governanceRating}">B</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p class="compare-summary" th:text="${summary}">Итог сравнения.</p>
+            </div>
+
+            <p class="empty-state" th:if="${!hasBoth}">
+                Для сравнения выберите двух реформаторов в форме выше.
+            </p>
+        </section>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: site-footer}"></div>
+
+</body>
+</html>
+

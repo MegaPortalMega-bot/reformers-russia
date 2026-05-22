@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="site-footer">
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-left">
+                <span>Проект «Реформаторы России»</span>
+                <span class="footer-sub">Учебное демо-приложение на Spring Boot</span>
+            </div>
+            <div class="footer-right">
+                <a href="https://spring.io" target="_blank" rel="noreferrer">Spring Boot</a>
+                <span>·</span>
+                <a th:href="@{/h2-console}" target="_blank">H2 Console</a>
+            </div>
+        </div>
+    </footer>
+</th:block>
+</body>
+</html>
+

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ошибка — Реформаторы России</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: site-header}"></div>
+
+<main class="page-main">
+    <div class="container">
+        <section class="reformer-detail">
+            <h1 style="margin-top:0;">Произошла ошибка</h1>
+            <p class="hero-subtitle">
+                Попробуйте обновить страницу или вернуться на главную.
+            </p>
+            <a th:href="@{/}" class="back-link">← На главную</a>
+        </section>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: site-footer}"></div>
+</body>
+</html>
+

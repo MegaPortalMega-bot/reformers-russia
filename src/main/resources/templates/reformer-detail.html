@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${reformer.fullName} + ' — Реформаторы России'">Реформатор</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: site-header}"></div>
+
+<main class="page-main">
+    <div class="container">
+        <a th:href="@{/}" class="back-link">← Назад к списку</a>
+
+        <section class="reformer-detail">
+            <div class="reformer-detail-header">
+                <div class="reformer-detail-image">
+                    <img th:src="${reformer.imageUrl}"
+                         th:alt="|Portrait of ${reformer.fullName}|"
+                         class="reformer-portrait">
+                </div>
+                <div class="reformer-detail-main">
+                    <h1 th:text="${reformer.fullName}">Имя реформатора</h1>
+                    <p class="detail-years"
+                       th:text="|${reformer.birthYear != null ? reformer.birthYear : '—'} — ${reformer.deathYear != null ? reformer.deathYear : '—'}|">
+                        1700 — 1750
+                    </p>
+                    <p class="detail-era" th:text="${reformer.era}">Эпоха</p>
+                    <p class="detail-short" th:text="${reformer.shortBio}">Краткая биография</p>
+
+                    <div class="detail-overall" th:if="${reformer.overallRating != null}">
+                        <span class="detail-overall-label">Итоговый рейтинг</span>
+                        <span class="detail-overall-value"
+                              th:classappend="' overall-badge--' + ${reformer.overallRating}"
+                              th:text="${reformer.overallRating}">S</span>
+                    </div>
+
+                    <a th:if="${reformer.wikipediaUrl != null and !#strings.isEmpty(reformer.wikipediaUrl)}"
+                       th:href="${reformer.wikipediaUrl}"
+                       class="wiki-link"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        Читать подробнее на Википедии →
+                    </a>
+
+                    <div class="detail-radar">
+                        <h2 class="detail-radar-title">Оценки по сферам</h2>
+                        <div class="detail-radar-chart-wrap">
+                            <canvas id="ratingsRadar"
+                                    th:data-name="${reformer.fullName}"
+                                    th:data-scores="${radarScores}">
+                            </canvas>
+                        </div>
+                        <p class="detail-radar-legend">
+                            S = 5 баллов, A = 4, B = 3, C = 2, D = 1, F = 0
+                        </p>
+                    </div>
+
+                    <div class="detail-ratings">
+                        <div class="rating-row">
+                            <span>Экономика</span>
+                            <span th:text="${reformer.economyRating}"
+                                  th:class="'badge rating-' + ${reformer.economyRating}">A</span>
+                        </div>
+                        <div class="rating-row">
+                            <span>Военные реформы</span>
+                            <span th:text="${reformer.militaryRating}"
+                                  th:class="'badge rating-' + ${reformer.militaryRating}">A</span>
+                        </div>
+                        <div class="rating-row">
+                            <span>Социальные реформы</span>
+                            <span th:text="${reformer.socialRating}"
+                                  th:class="'badge rating-' + ${reformer.socialRating}">A</span>
+                        </div>
+                        <div class="rating-row">
+                            <span>Образование</span>
+                            <span th:text="${reformer.educationRating}"
+                                  th:class="'badge rating-' + ${reformer.educationRating}">A</span>
+                        </div>
+                        <div class="rating-row">
+                            <span>Гос. управление</span>
+                            <span th:text="${reformer.governanceRating}"
+                                  th:class="'badge rating-' + ${reformer.governanceRating}">A</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="detail-section">
+                <h2>Подробная биография</h2>
+                <p th:text="${reformer.detailedBio}">Подробный текст</p>
+            </section>
+
+            <section class="detail-section">
+                <h2>Ключевые реформы</h2>
+                <ul class="bulleted-list">
+                    <li th:each="item : ${#strings.arraySplit(reformer.reforms, ';')}"
+                        th:text="${#strings.trim(item)}">
+                        Реформа
+                    </li>
+                </ul>
+            </section>
+
+            <section class="detail-section">
+                <h2>Ключевые достижения</h2>
+                <p th:text="${reformer.keyAchievements}">Описание достижений</p>
+            </section>
+        </section>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: site-footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script th:src="@{/js/radar-chart.js}"></script>
+</body>
+</html>
+

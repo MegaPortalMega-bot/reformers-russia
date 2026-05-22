@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реформаторы России — каталог</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: site-header}"></div>
+
+<main class="page-main">
+    <section class="hero">
+        <div class="container">
+            <h1>Реформаторы России</h1>
+            <p class="hero-subtitle">
+                Каталог исторических личностей, изменивших устройство государства, общества и экономики.
+            </p>
+            <form class="search-form" th:action="@{/}" method="get">
+                <input id="searchInput"
+                       type="text"
+                       name="q"
+                       th:value="${query}"
+                       placeholder="Поиск по имени реформатора..."
+                       autocomplete="off">
+                <button type="submit">Найти</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="catalog">
+        <div class="container">
+            <div class="catalog-header">
+                <h2>Каталог реформаторов</h2>
+                <span id="catalogCount" th:text="${#lists.size(reformers)} + ' персон'"></span>
+            </div>
+
+            <form class="catalog-filters" id="eraFilterForm" method="get" th:action="@{/}">
+                <label class="catalog-filters-label" for="eraFilter">Эпоха</label>
+                <select id="eraFilter" name="era" class="catalog-filters-select">
+                    <option value="" th:selected="${selectedEra == ''}">Все эпохи</option>
+                    <option th:each="eraOption : ${eras}"
+                            th:value="${eraOption}"
+                            th:text="${eraOption}"
+                            th:selected="${eraOption == selectedEra}">
+                    </option>
+                </select>
+                <input type="hidden" name="q" id="eraFormQuery" th:value="${query}">
+                <button type="button" class="catalog-filters-reset" id="resetEraFilter">Сбросить фильтр</button>
+            </form>
+
+            <div class="reformers-grid" id="reformersGrid">
+                <a class="reformer-card"
+                   th:each="reformer : ${reformers}"
+                   th:href="@{/reformer/{id}(id=${reformer.id})}"
+                   th:data-name="${reformer.fullName}"
+                   th:data-era="${reformer.era}">
+                    <div class="reformer-image">
+                        <img th:src="${reformer.imageUrl}"
+                             th:alt="|Portrait of ${reformer.fullName}|"
+                             loading="lazy">
+                    </div>
+                    <div class="reformer-body">
+                        <h3 th:text="${reformer.fullName}">Имя реформатора</h3>
+                        <span class="overall-badge"
+                              th:classappend="' overall-badge--' + ${reformer.overallRating}"
+                              th:text="${reformer.overallRating}">S</span>
+                        <p class="reformer-era" th:text="${reformer.era}">Эпоха</p>
+                        <p class="reformer-short" th:text="${reformer.shortBio}"></p>
+                    </div>
+                </a>
+            </div>
+
+            <p class="empty-state" id="emptyState" style="display:none;">
+                По вашему запросу ничего не найдено. Попробуйте изменить критерии поиска.
+            </p>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: site-footer}"></div>
+
+<script th:src="@{/js/search.js}"></script>
+</body>
+</html>
