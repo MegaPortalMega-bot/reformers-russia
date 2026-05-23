@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.PostConstruct;
 import ru.reformers.config.HelpDocumentsProperties;
 
-@Service
+//@Service
 public class HelpDocumentService {
 
     private static final Logger log = LoggerFactory.getLogger(HelpDocumentService.class);
@@ -72,7 +72,8 @@ public class HelpDocumentService {
                 configuredPath,
                 helpProperties.getDocumentsPath(),
                 Path.of(System.getProperty("user.home"), "Реформаторы_Документы").toString(),
-                Path.of(System.getProperty("user.dir"), "help-documents").toString());
+                Path.of(System.getProperty("user.dir"), "help-documents").toString(),
+                Path.of(System.getProperty("user.dir"), "src", "main", "resources", "static", "help-docs").toString());
 
         for (String candidate : candidates) {
             if (candidate == null || candidate.isBlank()) {
