@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import ru.reformers.service.HelpDocumentService;
 
-@Configuration
+//@Configuration
 @EnableConfigurationProperties(HelpDocumentsProperties.class)
 public class HelpWebConfig implements WebMvcConfigurer {
 
