@@ -3,22 +3,31 @@ WORKDIR /app
 
 # Копируем файл с зависимостями
 COPY pom.xml .
-# Скачиваем зависимости (это слой кэшируется, если pom.xml не менялся)
-RUN mvn dependency:go-offline
+RUN mvn dependency:go-offline -B
 
-# Копируем исходники и собираем fat JAR
+# Копируем исходники и собираем JAR
 COPY src ./src
-RUN mvn clean package spring-boot:repackage -DskipTests
+RUN mvn clean package -DskipTests -B
 
 # Финальный образ с JRE
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 
-# Копируем JAR-файл из предыдущего этапа сборки
+# Устанавливаем русскую локаль и кодировку
+ENV LANG=ru_RU.UTF-8 \
+    LANGUAGE=ru_RU:ru \
+    LC_ALL=ru_RU.UTF-8 \
+    JAVA_OPTS="-Dfile.encoding=UTF-8"
+
+# Копируем JAR из билд-образа
 COPY --from=build /app/target/*.jar app.jar
 
-# Проверяем, что JAR исполняемый (для Spring Boot это критично)
-RUN java -jar app.jar --version || true
+# Копируем документы прямо в образ (чтобы не искать их на диске)
+COPY src/main/resources/static/help-docs /app/help-docs
+
+# Создаём символическую ссылку, чтобы программа нашла документы
+RUN mkdir -p /home/sanyamopzzz && \
+    ln -sf /app/help-docs /home/sanyamopzzz/Реформаторы_Документы
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
