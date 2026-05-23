@@ -12,7 +12,7 @@ import ru.reformers.model.Reformer;
 import ru.reformers.repository.ReformerRepository;
 import ru.reformers.service.WikiEnrichmentService;
 
-@Configuration
+//@Configuration
 public class DataLoader {
 
     @Bean
