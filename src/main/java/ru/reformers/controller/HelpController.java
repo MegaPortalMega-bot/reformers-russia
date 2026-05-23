@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ru.reformers.service.HelpDocumentService;
 import ru.reformers.service.HelpDocumentService.HelpDocument;
 
-@Controller
+//@Controller
 public class HelpController {
 
     private final HelpDocumentService helpDocumentService;
